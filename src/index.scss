@@ -1,1 +1,17 @@
 @import '~bootstrap/scss/bootstrap';
+
+section {
+  align-content: center;
+  text-align: center;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: 30px 30px 30px 30px 30px 30px 30px 30px 30px;
+  margin: 5px auto;
+  width: 270px;
+}
+
+.cell {
+  padding: 0;
+}
