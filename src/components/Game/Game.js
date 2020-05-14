@@ -6,14 +6,18 @@ import GameBoard from '../GameBoard/GameBoard'
 
 const Game = ({ msgAlert, user }) => {
   const [startingBoard, setStartingBoard] = useState([])
+  const [gameId, setGameId] = useState()
   const createGame = () => {
     axios.post(apiUrl + '/games', {
       'game': {
         'board': [],
-        'user_id': 1
+        'user_id': user.id
       }
     })
-      .then(res => setStartingBoard(res.data.game.board))
+      .then(res => {
+        setStartingBoard(res.data.game.board)
+        setGameId(res.data.game.id)
+      })
       .then(() => msgAlert({
         heading: 'New Game Created',
         message: 'A new sudoku has been created. Enjoy!',
@@ -28,6 +32,7 @@ const Game = ({ msgAlert, user }) => {
       <button onClick={createGame}>New Game</button>
       <GameBoard
         user={user}
+        gameId={gameId}
         startingBoard={startingBoard}
       />
     </section>

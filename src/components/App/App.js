@@ -9,6 +9,7 @@ import SignIn from '../SignIn/SignIn'
 import SignOut from '../SignOut/SignOut'
 import ChangePassword from '../ChangePassword/ChangePassword'
 import Game from '../Game/Game'
+import GameIndex from '../GameIndex/GameIndex'
 
 class App extends Component {
   constructor () {
@@ -57,6 +58,9 @@ class App extends Component {
           )} />
           <AuthenticatedRoute user={user} exact path='/games' render={() => (
             <Game msgAlert={this.msgAlert} user={user} />
+          )} />
+          <AuthenticatedRoute user={user} exact path='/gamesplayed' render={() => (
+            <GameIndex msgAlert={this.msgAlert} user={user} />
           )} />
         </main>
       </Fragment>

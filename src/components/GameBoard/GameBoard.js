@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
+import apiUrl from '../../apiConfig'
+import axios from 'axios'
 
-const GameBoard = ({ user, startingBoard }) => {
+const GameBoard = ({ user, gameId, startingBoard }) => {
   const [board, setBoard] = useState([])
   useEffect(() => {
     console.log('GameBoard effect')
@@ -17,6 +19,12 @@ const GameBoard = ({ user, startingBoard }) => {
     }
     console.log(newBoard)
     setBoard(newBoard)
+    axios.patch(apiUrl + '/games/' + gameId, {
+      'game': {
+        'board': newBoard,
+        'user_id': user.id
+      }
+    })
   }
   const cleanBoard = [...board].map(cell => typeof cell === 'number' ? cell : '')
   console.log('Board is, ', cleanBoard)
