@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import apiUrl from '../../apiConfig'
 import axios from 'axios'
 
+import GameShow from '../GameShow/GameShow'
+
 const GameIndex = ({ msgAlert, user }) => {
   const [games, setGames] = useState([])
   useEffect(() => {
@@ -14,25 +16,32 @@ const GameIndex = ({ msgAlert, user }) => {
       }))
       .catch(console.error)
   }, [])
+  const deleteBoard = event => {
+    const id = event.target.id
+    axios.delete(apiUrl + '/games/' + id)
+      .then(() => msgAlert({
+        heading: 'Game Deleted',
+        message: `Successfully deleted game ${id}`,
+        variant: 'success'
+      }))
+      .then(() => {
+        const newGames = games.filter(game => game.id !== Number(id))
+        console.log(newGames)
+        setGames(newGames)
+      })
+      .catch(console.error)
+  }
   return (
     <section>
       {games.map(game => {
-        const cleanBoard = [...game.board].map(cell => typeof cell === 'number' ? cell : '')
         return (
-          <div key={game.id}>
-            <h3>Game ID: {game.id}</h3>
-            <div className='board'>
-              {cleanBoard.map((cell, index) => (
-                <p
-                  key={index}
-                  id={index}
-                  className="cell"
-                >
-                  {cell}
-                </p>
-              ))}
-            </div>
-          </div>
+          <GameShow
+            key={game.id}
+            gameId={game.id}
+            board={game.board}
+            msgAlert={msgAlert}
+            deleteBoard={deleteBoard}
+          />
         )
       })}
     </section>
