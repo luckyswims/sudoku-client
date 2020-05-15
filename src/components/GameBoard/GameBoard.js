@@ -18,7 +18,7 @@ const GameBoard = ({ user, gameId, startingBoard, msgAlert }) => {
     setBoard(newBoard)
     axios({
       method: 'patch',
-      url: apiUrl + '/games',
+      url: apiUrl + '/games/' + gameId,
       data: {
         'game': {
           'board': newBoard,
