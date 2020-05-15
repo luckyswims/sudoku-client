@@ -1,33 +1,42 @@
 import React, { useState, useEffect } from 'react'
 import apiUrl from '../../apiConfig'
 import axios from 'axios'
+// import checkBoard from './checkBoard'
 
-const GameBoard = ({ user, gameId, startingBoard }) => {
+const GameBoard = ({ user, gameId, startingBoard, msgAlert }) => {
   const [board, setBoard] = useState([])
   useEffect(() => {
-    console.log('GameBoard effect')
     setBoard(startingBoard)
   }, [startingBoard])
   const handleChange = event => {
-    console.log(event.target.id)
-    console.log(event.target.value)
     const newBoard = cleanBoard.map(value => value)
     if (event.target.value) {
       newBoard[event.target.id] = Number(event.target.value)
     } else {
       newBoard[event.target.id] = ''
     }
-    console.log(newBoard)
     setBoard(newBoard)
     axios.patch(apiUrl + '/games/' + gameId, {
-      'game': {
-        'board': newBoard,
-        'user_id': user.id
+      headers: {
+        Authorization: 'Token token=' + user.token
+      },
+      data: {
+        'game': {
+          'board': newBoard,
+          'user_id': user.id
+        }
       }
     })
+      // .then(res => checkBoard(res.data.game.board))
+      .catch(error => {
+        msgAlert({
+          heading: 'Game Update Failed with error: ' + error.message,
+          message: 'Your was unable to be updated.',
+          variant: 'danger'
+        })
+      })
   }
   const cleanBoard = [...board].map(cell => typeof cell === 'number' ? cell : '')
-  console.log('Board is, ', cleanBoard)
   const boardJsx = cleanBoard.map((cell, index) => (
     <input
       key={index}
@@ -40,7 +49,6 @@ const GameBoard = ({ user, gameId, startingBoard }) => {
       onChange={handleChange}
     />
   ))
-  console.log(boardJsx)
   return (
     <form className='board'>
       {boardJsx}

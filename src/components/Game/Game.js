@@ -8,12 +8,19 @@ const Game = ({ msgAlert, user }) => {
   const [startingBoard, setStartingBoard] = useState([])
   const [gameId, setGameId] = useState()
   const createGame = () => {
-    axios.post(apiUrl + '/games', {
-      'game': {
-        'board': [],
-        'user_id': user.id
+    axios({
+      method: 'post',
+      url: apiUrl + '/games',
+      data: {
+        'game': {
+          'board': []
+        }
+      },
+      headers: {
+        Authorization: 'Token token=' + user.token
       }
-    })
+    }
+    )
       .then(res => {
         setStartingBoard(res.data.game.board)
         setGameId(res.data.game.id)
@@ -23,7 +30,13 @@ const Game = ({ msgAlert, user }) => {
         message: 'A new sudoku has been created. Enjoy!',
         variant: 'success'
       }))
-      .catch(console.error)
+      .catch(error => {
+        msgAlert({
+          heading: 'New Game Failed with error: ' + error.message,
+          message: 'A new game was unable to be created.',
+          variant: 'danger'
+        })
+      })
   }
   useEffect(() => createGame(), [])
   return (
@@ -34,6 +47,7 @@ const Game = ({ msgAlert, user }) => {
         user={user}
         gameId={gameId}
         startingBoard={startingBoard}
+        msgAlert={msgAlert}
       />
     </section>
   )

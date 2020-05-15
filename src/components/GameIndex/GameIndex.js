@@ -7,18 +7,32 @@ import GameShow from '../GameShow/GameShow'
 const GameIndex = ({ msgAlert, user }) => {
   const [games, setGames] = useState([])
   useEffect(() => {
-    axios(apiUrl + '/games')
+    axios(apiUrl + '/games', {
+      headers: {
+        Authorization: 'Token token=' + user.token
+      }
+    })
       .then(res => setGames(res.data.games))
       .then(() => msgAlert({
         heading: 'Games Retrieved',
         message: 'Loaded your played games',
         variant: 'success'
       }))
-      .catch(console.error)
+      .catch(error => {
+        msgAlert({
+          heading: 'Game Index Failed with error: ' + error.message,
+          message: 'Unable to retrieve your played games.',
+          variant: 'danger'
+        })
+      })
   }, [])
   const deleteBoard = event => {
     const id = event.target.id
-    axios.delete(apiUrl + '/games/' + id)
+    axios.delete(apiUrl + '/games/' + id, {
+      headers: {
+        Authorization: 'Token token=' + user.token
+      }
+    })
       .then(() => msgAlert({
         heading: 'Game Deleted',
         message: `Successfully deleted game ${id}`,
@@ -26,10 +40,15 @@ const GameIndex = ({ msgAlert, user }) => {
       }))
       .then(() => {
         const newGames = games.filter(game => game.id !== Number(id))
-        console.log(newGames)
         setGames(newGames)
       })
-      .catch(console.error)
+      .catch(error => {
+        msgAlert({
+          heading: 'Delete Failed with error: ' + error.message,
+          message: 'Your game could not be deleted.',
+          variant: 'danger'
+        })
+      })
   }
   return (
     <section>
