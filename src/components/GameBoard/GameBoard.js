@@ -16,15 +16,17 @@ const GameBoard = ({ user, gameId, startingBoard, msgAlert }) => {
       newBoard[event.target.id] = ''
     }
     setBoard(newBoard)
-    axios.patch(apiUrl + '/games/' + gameId, {
-      headers: {
-        Authorization: 'Token token=' + user.token
-      },
+    axios({
+      method: 'patch',
+      url: apiUrl + '/games',
       data: {
         'game': {
           'board': newBoard,
           'user_id': user.id
         }
+      },
+      headers: {
+        Authorization: 'Token token=' + user.token
       }
     })
       // .then(res => checkBoard(res.data.game.board))
