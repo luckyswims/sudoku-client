@@ -76,9 +76,12 @@ Sudoku board.
 
 ### Unsolved Problems
 
-- Still need to prevent users from updating cells that were set by the starting board.
-- Still need to check if the user's input is valid
-- Still need to check if the user has successfully solved the puzzle
+- ~~Still need to check if the user's input is valid~~
+- ~~Still need to check if the user has successfully solved the puzzle~~
+- ~~Still need to change how users input values to a selection rather than typing~~
+- Still need to highlight the cell when a user selects it for input
+- Still need to prevent users from updating cells that were set by the starting board
+- Still need update the formatting to distinguish the 9 3x3 sections
 - Would like to eventually allow users to continue working on a puzzle they had started previously
 - Would like to improve the formatting of the game board
 - Would like to add the ability for users to add notes to cells

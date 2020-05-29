@@ -2,18 +2,19 @@ import React, { useState, useEffect } from 'react'
 import apiUrl from '../../apiConfig'
 import axios from 'axios'
 import checkBoard from './checkBoard'
+import Cell from '../Cell/Cell'
 
 const GameBoard = ({ user, gameId, startingBoard, msgAlert }) => {
   const [board, setBoard] = useState([])
   useEffect(() => {
     setBoard(startingBoard)
   }, [startingBoard])
-  const handleChange = event => {
+  const handleChange = (cellId, value) => {
     const newBoard = cleanBoard.map(value => value)
-    if (event.target.value) {
-      newBoard[event.target.id] = Number(event.target.value)
+    if (value) {
+      newBoard[cellId] = Number(value)
     } else {
-      newBoard[event.target.id] = ''
+      newBoard[cellId] = ''
     }
     if (checkBoard(newBoard)) {
       setBoard(newBoard)
@@ -54,15 +55,11 @@ const GameBoard = ({ user, gameId, startingBoard, msgAlert }) => {
   }
   const cleanBoard = [...board].map(cell => typeof cell === 'number' ? cell : '')
   const boardJsx = cleanBoard.map((cell, index) => (
-    <input
+    <Cell
       key={index}
       id={index}
-      className="cell"
-      type="number"
-      min="1"
-      max="9"
-      value={cell}
-      onChange={handleChange}
+      handleChange={handleChange}
+      cell={cell}
     />
   ))
   return (

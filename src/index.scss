@@ -1,14 +1,6 @@
 @import '~bootstrap/scss/bootstrap';
 
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-input[type='number'] {
-  -moz-appearance: textfield;
-}
+$cell-size: 3.125rem;
 
 section {
   align-content: center;
@@ -17,13 +9,45 @@ section {
 
 .board {
   display: grid;
-  grid-template-columns: 30px 30px 30px 30px 30px 30px 30px 30px 30px;
-  margin: 5px auto;
-  width: 270px;
+  grid-template-columns: $cell-size $cell-size $cell-size $cell-size $cell-size $cell-size $cell-size $cell-size $cell-size;
+  margin: 1.5rem auto;
+  width: 28.13rem;
 }
 
 .cell {
-  border: 1px solid #000;
+  border: 1px solid $black;
+  font-size: 2rem;
+  height: $cell-size;
   margin: 0;
   padding: 0;
+  width: $cell-size;
+}
+
+.modal-backdrop {
+  opacity: 0;
+}
+
+.modal-dialog {
+  left: 2rem;
+  position: fixed;
+  top: 8rem;
+  width: 184px;
+}
+
+.modal-body {
+  align-content: center;
+  margin: auto;
+  text-align: center;
+
+  section {
+    display: grid;
+    grid-template-columns: $cell-size $cell-size $cell-size;
+  }
+
+  button {
+    font-size: 2rem;
+    height: $cell-size;
+    padding: 0;
+    width: $cell-size;
+  }
 }
