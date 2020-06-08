@@ -11,11 +11,59 @@ function Cell ({ id, handleChange, cell }) {
     handleClose()
   }
 
+  let sectionPosition
+  switch (id % 27) {
+  case 0:
+  case 3:
+  case 6:
+    sectionPosition = 'top-left'
+    break
+  case 1:
+  case 4:
+  case 7:
+    sectionPosition = 'top-middle'
+    break
+  case 2:
+  case 5:
+  case 8:
+    sectionPosition = 'top-right'
+    break
+  case 9:
+  case 12:
+  case 15:
+    sectionPosition = 'middle-left'
+    break
+  case 10:
+  case 13:
+  case 16:
+    sectionPosition = 'center'
+    break
+  case 11:
+  case 14:
+  case 17:
+    sectionPosition = 'middle-right'
+    break
+  case 18:
+  case 21:
+  case 24:
+    sectionPosition = 'bottom-left'
+    break
+  case 19:
+  case 22:
+  case 25:
+    sectionPosition = 'bottom-middle'
+    break
+  case 20:
+  case 23:
+  case 26:
+    sectionPosition = 'bottom-right'
+    break
+  }
   return (
     <Fragment>
       <p
         id={id}
-        className="cell"
+        className={show ? `${sectionPosition} cell selected` : `${sectionPosition} cell`}
         onClick={handleShow}
       >
         {cell}

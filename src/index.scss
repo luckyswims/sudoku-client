@@ -1,6 +1,7 @@
 @import '~bootstrap/scss/bootstrap';
 
 $cell-size: 3.125rem;
+$highlight-color: #63d2ff;
 
 section {
   align-content: center;
@@ -21,6 +22,42 @@ section {
   margin: 0;
   padding: 0;
   width: $cell-size;
+}
+
+.selected {
+  background-color: $highlight-color;
+}
+
+.top-left {
+  border-width: 2px 1px 1px 2px;
+}
+
+.top-middle {
+  border-width: 2px 1px 1px;
+}
+
+.top-right {
+  border-width: 2px 2px 1px 1px;
+}
+
+.middle-left {
+  border-width: 1px 1px 1px 2px;
+}
+
+.middle-right {
+  border-width: 1px 2px 1px 1px;
+}
+
+.bottom-left {
+  border-width: 1px 1px 2px 2px;
+}
+
+.bottom-middle {
+  border-width: 1px 1px 2px;
+}
+
+.bottom-right {
+  border-width: 1px 2px 2px 1px;
 }
 
 .modal-backdrop {
